@@ -58,9 +58,6 @@ class LogStash::Inputs::EventLog < LogStash::Inputs::Base
         timestamp = to_timestamp(event.TimeGenerated)
 
         e = LogStash::Event.new(
-          "host" => @hostname,
-          "path" => @logfile,
-          "type" => @type,
           "@timestamp" => timestamp
         )
 
@@ -82,8 +79,6 @@ class LogStash::Inputs::EventLog < LogStash::Inputs::Base
           e["InsertionStrings"] = event.InsertionStrings
           e["Data"] = event.Data
         end
-
-        e["message"] = event.Message
 
         decorate(e)
         queue << e
